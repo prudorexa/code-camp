@@ -1,17 +1,24 @@
-'use client';
+import Link from "next/link";
+import { buttonVariants } from "./components/ui/button";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
+import { User } from "lucide-react";
 
-import React from 'react'
-import { signIn } from 'next-auth/react';
-// import { logIn } from 'next-auth/react';
+export default async function Home() {
+  const session = await getServerSession(authOptions);
 
-const page = () => {
+
   return (
     <div>
-      <h1>Sign In</h1>
-      <button onClick={() => signIn('google')}>Sign in with Google</button>
-      <button onClick={() => signIn('facebook')}>Sign in with Facebook</button>
-    </div>
-  )
-}
+      <h1 className="text-4xl">Home</h1>
+      <Link className={buttonVariants()} href='/admin'>
+        Open my admin
+      </Link>
 
-export default page
+      <h2>Client Session</h2>
+      <User />
+      <h2>Server Session</h2>
+      {JSON.stringify(session)}
+    </div>
+  );
+}

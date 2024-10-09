@@ -14,7 +14,9 @@ import { Input } from '../ui/input';
 import Button from '../ui/button'; 
 import GoogleSignInButton from '../GoogleSignInButton';
 import FacebookSignInButton from '../FacebookSignInButton';
-import Link from 'next/link'; // Ensure this is imported
+import Link from 'next/link'; 
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
 
 const FormSchema = z
   .object({
@@ -32,6 +34,8 @@ const FormSchema = z
   });
 
 const SignUpForm: React.FC = () => {
+  const { toast } = useToast()
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -42,8 +46,26 @@ const SignUpForm: React.FC = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof FormSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+    const response = await fetch('/api/user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: values.username,
+          email: values.email,
+          password: values.password,
+        }),
+    })
+    if (response.ok) {
+      router.push('/sign-in');
+    }  else {
+      toast({
+        title: "Error",
+        description: "OOps! Something went wrong!",
+        variant: "destructive",
+      })       }
   };
 
   return (

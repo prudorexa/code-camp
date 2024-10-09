@@ -4,15 +4,16 @@ import NextAuth from 'next-auth';
 
 declare module 'next-auth' {
   interface User {
-    id: string; // Add the id property to the User object
+    username: string
   }
 
   interface Session {
-    user: {
-      id: string; // Add the id property to the user object
-      name?: string | null;
-      email?: string | null;
-      image?: string | null;
-    };
+    user: User & {
+      username: string
+    }
+    token: {
+      username:string
+    }
+    
   }
 }
