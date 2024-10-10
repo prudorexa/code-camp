@@ -8,7 +8,7 @@ const UserAccountNav = () => {
     <Button 
       onClick={() => signOut({
         redirect: true,
-        callbackUrl: `${window.location.origin}/sign-in`,
+        callbackUrl: `${window.location.origin}/auth/sign-in`,
       })} 
       variant='primary' // Changed from 'destructive' to 'primary'
     >

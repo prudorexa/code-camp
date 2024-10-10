@@ -55,7 +55,6 @@ const SignInForm = () => {
         variant: 'destructive',
       });
     } else {
-      // No need to use asPath, directly replace with a target route
       router.push('/admin'); // Navigate to the admin page after sign-in
     }
   };
@@ -109,7 +108,7 @@ const SignInForm = () => {
       
       <p className="text-center text-sm text-gray-600 mt-2">
         If you don't have an account, please&nbsp;
-        <Link className="text-blue-500 hover:underline" href="/sign-up">
+        <Link className="text-blue-500 hover:underline" href="/auth/sign-up">
           Sign up
         </Link>
       </p>
